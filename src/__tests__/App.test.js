@@ -6,13 +6,9 @@ describe('Newsletter Signup Form', () => {
   test('renders the form with name, email, and interests checkboxes', () => {
     render(<App />);
     
-    // Check for name input
+
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
-    
-    // Check for email input
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
-    
-    // Check for interests checkboxes
     expect(screen.getByLabelText(/tech/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/sports/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/music/i)).toBeInTheDocument();
