@@ -1,24 +1,94 @@
-function App() {
-  return (
-    <main>
-      <h1>Hi, I'm (your name)</h1>
-      <img alt="My profile pic" src="https://via.placeholder.com/350" />
-      <h2>About Me</h2>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+import React, { useState } from 'react';
 
-      <div>
-        <a href="https://github.com">GitHub</a>
-        <a href="https://linkedin.com">LinkedIn</a>
-      </div>
-    </main>
+function App() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [interests, setInterests] = useState([]);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleInterestChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setInterests([...interests, value]);
+    } else {
+      setInterests(interests.filter((interest) => interest !== value));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  return (
+    <div>
+      {!submitted ? (
+        <form onSubmit={handleSubmit}>
+          <label>
+            Name:
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              aria-label="name"
+            />
+          </label>
+          <br />
+          <label>
+            Email:
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              aria-label="email"
+            />
+          </label>
+          <br />
+          <fieldset>
+            <legend>Interests</legend>
+            <label>
+              <input
+                type="checkbox"
+                value="Tech"
+                onChange={handleInterestChange}
+                aria-label="tech"
+              />
+              Tech
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="Sports"
+                onChange={handleInterestChange}
+                aria-label="sports"
+              />
+              Sports
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                value="Music"
+                onChange={handleInterestChange}
+                aria-label="music"
+              />
+              Music
+            </label>
+          </fieldset>
+          <br />
+          <button type="submit">Submit</button>
+        </form>
+      ) : (
+        <div>
+          <h2>Thank you, {name}!</h2>
+          <p>You have selected the following interests:</p>
+          <ul>
+            {interests.map((interest) => (
+              <li key={interest}>{interest}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
   );
 }
 
